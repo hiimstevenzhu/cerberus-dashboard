@@ -1,0 +1,23 @@
+.sidenav {
+  display: flex;
+  width: 150px;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidenav ul {
+  list-style: none;
+  padding: 0;
+  text-align: end;
+}
+
+.sidenav li {
+  padding: 0.5rem 0;
+  cursor: pointer;
+  color: #1e90ff;
+}
+
+.sidenav li:hover {
+  text-decoration: underline;
+}

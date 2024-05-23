@@ -1,0 +1,17 @@
+.header-content {
+  font-size: calc(10px + 1.5vmin);
+  color: rgb(244, 245, 239);
+}
+
+.main-content {
+  font-size: calc(10px + 0.5vmin);
+  color: rgb(244, 245, 239);
+}
+
+.main-body {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}

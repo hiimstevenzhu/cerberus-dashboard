@@ -1,31 +1,34 @@
-.App {
-  text-align: center;
+/* src/App.css */
+body {
+  margin: 0;
+  font-family: "Merriweather", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  background-color: #0d0f13;
+  color: rgb(244, 245, 239);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.topbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px; /* Adjust this height to make the top bar thicker */
+  background-color: #0d0f13;
+  color: rgb(244, 245, 239);
+  padding: 20px;
+  font-size: 24px; /* Optional: Adjust font size as needed */
+}
+
+.container {
+  display: flex;
+  height: calc(
+    100vh - 80px
+  ); /* Adjust height to account for the top bar height */
 }
 
 @keyframes App-logo-spin {
