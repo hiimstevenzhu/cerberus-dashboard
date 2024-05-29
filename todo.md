@@ -7,3 +7,4 @@
 
 - boilerplate
 - basic dashboard navigation
+- websocket implementation to pull for data from python script
