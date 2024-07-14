@@ -1,48 +1,42 @@
-# receiver_client.py
 import asyncio
 import websockets
 import json
+import queue
 
-class MessageReceiver:
-    def __init__(self):
-        self.queue = asyncio.Queue()
-
-    async def receive_messages(self, websocket):
-        try:
-            while True:
-                print("Awaiting message...")
-                message = await websocket.recv()
-                print("Obtained message...")
-                message = json.loads(message)
-                await self.queue.put(message)
-                print(f"Received a message, {message}")
-        except websockets.ConnectionClosed as e:
-            print(f"Connection closed: {e}")
-
-    async def display_messages(self):
+async def message_receiver(queue):
+    print("Starting WebSocket server...")
+    async with websockets.serve(lambda ws, path: handle_message(ws, path, queue), "localhost", 8765):
+        print("WebSocket server started.")
         while True:
-            if not self.queue.empty():
-                print("Displaying...")
-                message = await self.queue.get()
-                print(f'Displayed: {message}, count: {message}')
-                await asyncio.sleep(2)
+            await asyncio.sleep(1)
 
-    async def handler(self):
-        uri = "ws://localhost:8765"
+async def handle_message(websocket, path, queue):
+    print("Client connected.")
+    while True:
         try:
-            print(f"Connecting to {uri}")
-            async with websockets.connect(uri) as websocket:
-                print("Connected to server")
-                receiver_task = asyncio.create_task(self.receive_messages(websocket))
-                display_task = asyncio.create_task(self.display_messages())
-                await asyncio.gather(receiver_task, display_task)
-        except Exception as e:
-            print(f"Failed to connect to server: {e}")
+            message = await websocket.recv()
+            queue.put_nowait(json.loads(message))
+            print(f"Received message, putting into queue...")
+        except websockets.exceptions.ConnectionClosedError:
+            print("Client disconnected.")
+            break
 
-    def start(self):
-        asyncio.get_event_loop().run_until_complete(self.handler())
+async def message_printer(queue):
+    while True:
+        if not queue.empty():
+            message = queue.get_nowait()
+            print(f"Received from queue: {message['message']}")
+            await asyncio.sleep(2)
+        else:
+            await asyncio.sleep(0.1)
+
+async def main():
+    q = queue.Queue()
+    message_receiver_task = asyncio.create_task(message_receiver(q))
+    message_printer_task = asyncio.create_task(message_printer(q))
+    
+    await asyncio.gather(message_receiver_task, message_printer_task)
 
 if __name__ == "__main__":
-    print("Starting receiver...")
-    receiver = MessageReceiver()
-    receiver.start()
+    print("Starting...")
+    asyncio.run(main())

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const DummyTerminal = () => {
   const [data, setData] = useState({
-    current_line: "",
+    message: "",
     matches: 0,
     matched_keywords: [],
     match_dict: {},
@@ -35,7 +35,7 @@ const DummyTerminal = () => {
 
   const rtContent = (
     <div>
-      <p className="header-content">{data.current_line}</p>
+      <p className="header-content">{data.message}</p>
       <p className="main-content"> Matches count: {data.matches} </p>
       <p className="main-content">Matched keywords: {data.matched_keywords}</p>
     </div>
