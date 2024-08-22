@@ -1,3 +1,11 @@
+# ceberus (dashboard and receiver)
+
+this contains the secondary portion of the system mentioned under https://github.com/hiimstevenzhu/cerberus.
+
+# usage
+
+installed the required dependencies. currently, this system requires two python files and a local react webpage. this repository contains one python file and a react webpage that needs to be run. (refactoring is in the works - please give some time!)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
